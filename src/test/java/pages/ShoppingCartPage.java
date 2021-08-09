@@ -7,6 +7,9 @@ import elements.Button;
 import elements.UIElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
 
 public class ShoppingCartPage extends BasePage {
     private final static String endpoint = "/cart.html";
@@ -17,6 +20,7 @@ public class ShoppingCartPage extends BasePage {
     private final static By cart_Continue_Shopping_Button_By = By.id("continue-shopping");
     private final static By cart_Removed_Item_Identifier_By = By.className("removed_cart_item");
     private final static By cart_Checkout_Button_By = By.id("checkout");
+    private final static By items_Count_By = By.className("cart_item");
 
     @Override
     protected void openPage() {
@@ -60,6 +64,10 @@ public class ShoppingCartPage extends BasePage {
         return new UIElement(browsersService, cart_Checkout_Button_By);
     }
 
+    public int getItemsCount() {
+        return browsersService.getDriver().findElements(items_Count_By).size();
+    }
+
 
     //atomic methods
     public String displayQuantityText() {
@@ -70,8 +78,9 @@ public class ShoppingCartPage extends BasePage {
         return getPriceOfAddedItem().getText();
     }
 
-    public void clickRemoveButton(String productName) {
+    public ShoppingCartPage clickRemoveButton(String productName) {
         getRemoveItemButton(productName).click();
+        return this;
     }
 
     public void clickContinueShoppingButton() {

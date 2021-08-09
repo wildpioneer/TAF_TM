@@ -12,6 +12,7 @@ public class LoginPage extends BasePage {
     private final static By usernameSelector = By.id("user-name");
     private final static By passwordSelector = By.id("password");
     private final static By loginBtnSelector = By.id("login-button");
+    private final static By errorMessageSelector = By.cssSelector(".error-message-container.error h3");
 
     public LoginPage(BrowsersService browsersService, boolean openPageByUrl) {
         super(browsersService, openPageByUrl);
@@ -39,10 +40,19 @@ public class LoginPage extends BasePage {
         return new UIElement(browsersService, loginBtnSelector);
     }
 
+    public UIElement getErrorMessage() {
+        return new UIElement(browsersService, errorMessageSelector);
+    }
+
     // Atomic Methods
-    public ProductsPage loginBtnClick() {
-        getLoginButton().click();
+    public ProductsPage successLoginBtnClick() {
+        loginBtnClick();
         return new ProductsPage(browsersService, false);
+    }
+
+    public LoginPage loginBtnClick() {
+        getLoginButton().click();
+        return this;
     }
 
     public LoginPage setUsername(String username) {

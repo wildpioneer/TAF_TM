@@ -76,8 +76,9 @@ public class CheckoutInfoPage extends BasePage {
         return this;
     }
 
-    public void clickContinueButton() {
+    public CheckoutOverviewPage clickContinueButton() {
         getContinueButton().click();
+        return new CheckoutOverviewPage(browsersService, false);
     }
 
     public String displayErrorButtonMessage(){
