@@ -10,14 +10,12 @@ import utils.Waits;
 
 public class BrowsersService {
     private WebDriver driver = null;
-    private DriverManagerType driverManagerType = null;
     private Waits waiters;
 
     public BrowsersService() {
         switch (ReadProperties.getInstance().getBrowserName().toLowerCase()) {
             case "chrome" -> {
-                driverManagerType = DriverManagerType.CHROME;
-                WebDriverManager.getInstance(driverManagerType).setup();
+                WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.setHeadless(ReadProperties.getInstance().isHeadless());
                 chromeOptions.addArguments("--disable-gpu");
@@ -25,11 +23,11 @@ public class BrowsersService {
                 chromeOptions.addArguments("--ignore-certificate-errors");
                 chromeOptions.addArguments("--silent");
                 chromeOptions.addArguments("--start-maximized");
+
                 driver = new ChromeDriver(chromeOptions);
             }
             case "firefox" -> {
-                driverManagerType = DriverManagerType.FIREFOX;
-                WebDriverManager.getInstance(driverManagerType).setup();
+                WebDriverManager.getInstance(DriverManagerType.FIREFOX).setup();
                 driver = new FirefoxDriver();
             }
             default -> System.out.println("Browser " + ReadProperties.getInstance().getBrowserName() + " is not supported.");
